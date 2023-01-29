@@ -4,22 +4,44 @@ import PropTypes from 'prop-types';
 
 class Searchbar extends Component {
   state = {
-    items: [],
+    search: '',
   };
 
+  handleChange = ({ target }) => {
+    const { name, value } = target;
+    this.setState({ [name]: value });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    const { onSubmit } = this.props;
+    onSubmit({ ...this.state });
+    this.reset();
+  };
+
+  reset() {
+    this.setState({ search: '' });
+  }
+
   render() {
+    const { search } = this.state;
+    const { handleChange, handleSubmit } = this;
+
     return (
       <header className={css.searchbar}>
-        <form className={css.form}>
+        <form className={css.form} onSubmit={handleSubmit}>
           <button type="submit" className={css.button}>
             <span className={css.button_label}>Search</span>
           </button>
 
           <input
             className={css.input}
+            value={search}
+            name="search"
+            onChange={handleChange}
             type="text"
-            autocomplete="off"
-            autofocus
+            autoComplete="off"
+            autoFocus
             placeholder="Search images and photos"
           />
         </form>
@@ -30,6 +52,6 @@ class Searchbar extends Component {
 
 export default Searchbar;
 
-// Searchbar.propTypes = {
-//   onSubmit: PropTypes.func.isRequired,
-// };
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
