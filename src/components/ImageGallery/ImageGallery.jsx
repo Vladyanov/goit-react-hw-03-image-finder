@@ -1,5 +1,4 @@
 import css from './image-gallery.module.scss';
-import { Component } from 'react';
 import PropTypes from 'prop-types';
 
 const ImageGallery = () => {
