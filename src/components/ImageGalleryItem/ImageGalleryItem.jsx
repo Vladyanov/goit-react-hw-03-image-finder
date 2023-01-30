@@ -1,10 +1,13 @@
 import css from './image-gallery-item.module.scss';
-import PropTypes, { shape } from 'prop-types';
+import PropTypes from 'prop-types';
 
-const ImageGalleryItem = ({ items }) => {
-  console.log(items);
+const ImageGalleryItem = ({ items, searchFullSizeImg }) => {
   const elements = items.map(({ id, webformatURL, largeImageURL }) => (
-    <li key={id} className={css.gallery_item}>
+    <li
+      onClick={() => searchFullSizeImg({ largeImageURL })}
+      key={id}
+      className={css.gallery_item}
+    >
       <img src={webformatURL} alt="" />
     </li>
   ));
@@ -19,9 +22,10 @@ ImageGalleryItem.defaultProps = {
 
 ImageGalleryItem.propTypes = {
   items: PropTypes.arrayOf(
-    shape({
+    PropTypes.shape({
       id: PropTypes.number.isRequired,
       webformatURL: PropTypes.string.isRequired,
     })
   ),
+  searchFullSizeImg: PropTypes.func.isRequired,
 };
